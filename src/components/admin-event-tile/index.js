@@ -1,13 +1,19 @@
 import React from "react";
+import { toggleEventVerification, deleteEvent } from "../../services/database";
 import "./style.css";
 
-export default function AdminEventTile({ title, desc, time, location }) {
+export default function AdminEventTile({
+  id,
+  title,
+  desc,
+  time,
+  link,
+  location,
+  verified,
+}) {
   return (
     <div className='eventTile'>
-      <a
-        href='https://www.meetup.com/Technology-Meetup-India/events/277373901'
-        className='eventName'
-      >
+      <a href={link} className='eventName'>
         {title}
       </a>
       <p className='eventTime'>{time}</p>
@@ -15,11 +21,22 @@ export default function AdminEventTile({ title, desc, time, location }) {
       <p className='eventDesc'>{location}</p>
 
       <div>
-        <a target='_blank' rel='noreferrer' className='eventAddToCalenderBtn'>
-          Approve
+        <a
+          onClick={() => toggleEventVerification(id, verified)}
+          target='_blank'
+          rel='noreferrer'
+          className='adminEvent__rejectApprove'
+          style={{ backgroundColor: verified ? "#da552e" : "#53c645" }}
+        >
+          {verified ? "Reject" : "Approve"}
         </a>
 
-        <a target='_blank' rel='noreferrer' className='eventAddToCalenderBtn'>
+        <a
+          onClick={() => deleteEvent(id)}
+          target='_blank'
+          rel='noreferrer'
+          className='adminEvent__delete'
+        >
           Delete
         </a>
       </div>
