@@ -4,7 +4,8 @@ import AdminEventTile from "../../components/admin-event-tile";
 import { UserContext } from "../../contexts/user-context";
 import "./style.css";
 
-import { getEvents } from "../../services/database";
+import { getAdminEvents } from "../../services/database";
+import { toDateTime } from "../../funcions";
 
 export default function AdminPage() {
   const [user, setUser] = useContext(UserContext).user;
@@ -19,7 +20,7 @@ export default function AdminPage() {
   if (user?.uid !== "N5siU8Wi1OXoLg6TtjNxHp4tOIl2") sendToUrl("/");
 
   const getSetEvents = async () => {
-    let [fetchedEvents, _last] = await getEvents();
+    let [fetchedEvents, _last] = await getAdminEvents();
     console.log(`these are the fetched ideas: ${fetchedEvents}`);
     setevents(fetchedEvents);
   };
@@ -36,36 +37,21 @@ export default function AdminPage() {
           return (
             <div key={event["name"]}>
               <AdminEventTile
+                id={id}
                 title={event["name"]}
                 desc={event["desc"]}
-                time='Saturday, April 24, 2021'
+                link={event["link"]}
+                time={`${toDateTime(event["date"]["seconds"])}`}
+                verified={event["verified"]}
               />
             </div>
           );
         })}
-
-        <AdminEventTile
-          title='Flutter JS Meetup'
-          desc='Greetings!
-As promised, we are here to make your 2021 a knowledge packed year and a year full of new learnings.
-
-We are happy to announce our next virtual session on "Flutter JS" based on the inputs received from the participants.
-
-Grab this opportunity at the earliest and register yourself free for this meetup and improve your skills.'
-          time='Saturday, April 24, 2021'
-        />
-
-        <AdminEventTile
-          title='Flutter JS Meetup'
-          desc='Greetings!
-As promised, we are here to make your 2021 a knowledge packed year and a year full of new learnings.
-
-We are happy to announce our next virtual session on "Flutter JS" based on the inputs received from the participants.
-
-Grab this opportunity at the earliest and register yourself free for this meetup and improve your skills.'
-          time='Saturday, April 24, 2021'
-        />
       </div>
     </div>
   );
 }
+
+// new Date(event["date"]["seconds"]).toDateString() +
+// " at " +
+// new Date(event["date"]["seconds"]).toLocaleTimeString()

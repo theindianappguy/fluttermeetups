@@ -7,6 +7,7 @@ import { UserContext } from "../../contexts/user-context";
 import { useHistory } from "react-router-dom";
 
 import { getEvents } from "../../services/database";
+import { toDateTime } from "../../funcions";
 
 export default function HomePage() {
   const [user, setUser] = useContext(UserContext).user;
@@ -77,7 +78,7 @@ export default function HomePage() {
                 <EventTile
                   title={event["name"]}
                   desc={event["desc"]}
-                  time='Saturday, April 24, 2021'
+                  time={`${toDateTime(event["date"]["seconds"])}`}
                 />
               </div>
             );
