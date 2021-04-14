@@ -1,0 +1,90 @@
+@media screen and (min-width: 1088px) {
+  .container {
+    max-width: 960px;
+    width: 960px;
+  }
+}
+
+.container {
+  padding: 24px 32px;
+}
+
+.submitEvenet__title {
+  font-size: 36px;
+}
+
+.submitEvenet__subtitle {
+  font-size: 20px;
+  margin: 8px 0px;
+}
+
+.submitEvent__inputContainer {
+  padding: 24px 0px;
+}
+
+.submitEvent__label {
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 21px;
+  color: #111111;
+}
+
+.submitEvent__input {
+  border: 1px solid #cadae2;
+  padding: 8px 16px;
+  font-size: 16px;
+  margin-bottom: 16px;
+  min-width: 300px;
+}
+
+.submitEvent__input:focus {
+  outline: none;
+}
+
+.submitEvent__checkbox {
+  margin-right: 8px;
+}
+.submitEvent__checkboxLabel {
+  margin-right: 6px;
+  font-weight: 400;
+}
+
+.submitEvent__textarea {
+  min-width: 300px;
+  border: 1px solid #cadae2;
+  padding: 8px 16px;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.submitEvent__textarea:focus {
+  outline: none;
+}
+
+.submitEvent__submit {
+  margin-right: 16px;
+  background-color: #3bb4ff !important;
+  color: white !important;
+  padding: 12px 32px;
+  color: #3bb4ff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.submitEvent__submit:focus {
+  outline: none;
+}
+
+.react-date-picker {
+  margin-bottom: 16px;
+  border: 1px solid #cadae2;
+  padding: 8px 16px;
+}
+
+.react-date-picker__wrapper {
+  border: none !important;
+}
