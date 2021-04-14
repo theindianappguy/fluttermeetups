@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import EventTile from "../../components/event-tile";
 import "./index.css";
 
@@ -6,35 +6,16 @@ import { signInWithGoogle } from "../../services/auth";
 import { UserContext } from "../../contexts/user-context";
 import { useHistory } from "react-router-dom";
 
+import { getEvents } from "../../services/database";
+
 export default function HomePage() {
   const [user, setUser] = useContext(UserContext).user;
+  const [events, setevents] = useState([]);
 
   let history = useHistory();
 
   function sendToUrl(string) {
     history.push(string);
-  }
-
-  async function getEvents() {
-    var myHeaders = new Headers();
-    myHeaders.append(
-      "Cookie",
-      "XSRF-TOKEN=eyJpdiI6Im9XTUxVRDJuakVSUGxcLzlsbFp2WEdBPT0iLCJ2YWx1ZSI6IkdEb2QwOWdLWGRhdTRZWWlTNkI2RjZBUGltXC9IMkZXVXNpbEY4SmVZWnhuMFVBYzdvRGI4WEJuSWJMaGhjK1l2IiwibWFjIjoiY2YyOTFlMjc3M2ViZDg5Mzk4YWFiZTBjNzIxZjhhNzE4YTUzYzM4NGRjMTMzYTU3Y2VmYjIwMjEwOGQ3MzFmNiJ9; laravel_session=eyJpdiI6InFrd3hpb0VxNlJ4M3orTHpzOXR3aHc9PSIsInZhbHVlIjoibEF4MFRCaTJPM0hlaGVMdXRyejZuUmxDRkFoTkdIQzZSNVhqcnY5eXhvK3dFaUhCSktpNU92STlJY0QyZ25QbSIsIm1hYyI6ImU0ZDI5ZGI5NzVlZTcwNDJhOTBlYTRiYTY3M2E5YjYyY2VjMGU2OTlkOGY1YWQ2YTMzYjg1NTE1ZDk2Y2EyZjkifQ%3D%3D"
-    );
-
-    var requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-      mode: "no-cors",
-    };
-
-    fetch("https://flutterevents.com/feed", requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        console.log(`result: ${result}`);
-      })
-      .catch((error) => console.log("error", error));
   }
 
   const onSignInBtnClick = async () => {
@@ -47,8 +28,14 @@ export default function HomePage() {
     console.log(`user we get on signin : ${user}`);
   };
 
+  const getSetEvents = async () => {
+    let [fetchedEvents, _last] = await getEvents();
+    console.log(`these are the fetched ideas: ${fetchedEvents}`);
+    setevents(fetchedEvents);
+  };
+
   useEffect(() => {
-    getEvents();
+    getSetEvents();
   }, []);
 
   return (
@@ -84,38 +71,17 @@ export default function HomePage() {
         </p>
 
         <div style={{ marginTop: "32px" }}>
-          <EventTile
-            title='Flutter JS Meetup'
-            desc='Greetings!
-As promised, we are here to make your 2021 a knowledge packed year and a year full of new learnings.
-
-We are happy to announce our next virtual session on "Flutter JS" based on the inputs received from the participants.
-
-Grab this opportunity at the earliest and register yourself free for this meetup and improve your skills.'
-            time='Saturday, April 24, 2021'
-          />
-
-          <EventTile
-            title='Flutter JS Meetup'
-            desc='Greetings!
-As promised, we are here to make your 2021 a knowledge packed year and a year full of new learnings.
-
-We are happy to announce our next virtual session on "Flutter JS" based on the inputs received from the participants.
-
-Grab this opportunity at the earliest and register yourself free for this meetup and improve your skills.'
-            time='Saturday, April 24, 2021'
-          />
-
-          <EventTile
-            title='Flutter JS Meetup'
-            desc='Greetings!
-As promised, we are here to make your 2021 a knowledge packed year and a year full of new learnings.
-
-We are happy to announce our next virtual session on "Flutter JS" based on the inputs received from the participants.
-
-Grab this opportunity at the earliest and register yourself free for this meetup and improve your skills.'
-            time='Saturday, April 24, 2021'
-          />
+          {events.map(({ id, event }) => {
+            return (
+              <div key={event["name"]}>
+                <EventTile
+                  title={event["name"]}
+                  desc={event["desc"]}
+                  time='Saturday, April 24, 2021'
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
