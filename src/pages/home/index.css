@@ -57,7 +57,7 @@
   font-size: 18px !important;
   text-align: center;
   padding: 12.5px 21px !important;
-  border: 1px solid #f8cd5f !important;
+  border: 1px solid #3bb4ff !important;
 }
 
 .hero__ctaInput:focus {
@@ -65,8 +65,8 @@
 }
 
 .hero_ctaButton {
-  background-color: #f8cd5f !important;
-  color: #320101 !important;
+  background-color: #3bb4ff !important;
+  color: white !important;
   font-weight: 700 !important;
   font-size: 18px !important;
   line-height: 120% !important;
@@ -90,7 +90,7 @@
 }
 
 .here__ctaSubmitEvent {
-  box-shadow: inset 0 -3px 0 0 #f9ce21;
+  box-shadow: inset 0 -3px 0 0 #3bb4ff;
   font-size: 18px;
   margin-top: 24px !important;
   cursor: pointer;
