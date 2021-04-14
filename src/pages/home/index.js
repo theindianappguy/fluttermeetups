@@ -1,8 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import EventTile from "../../components/event-tile";
 import "./index.css";
 
+import { signInWithGoogle } from "../../services/auth";
+import { UserContext } from "../../contexts/user-context";
+import { useHistory } from "react-router-dom";
+
 export default function HomePage() {
+  const [user, setUser] = useContext(UserContext).user;
+
+  let history = useHistory();
+
+  function sendToUrl(string) {
+    history.push(string);
+  }
+
   async function getEvents() {
     var myHeaders = new Headers();
     myHeaders.append(
@@ -25,6 +37,16 @@ export default function HomePage() {
       .catch((error) => console.log("error", error));
   }
 
+  const onSignInBtnClick = async () => {
+    let user = await signInWithGoogle();
+    if (user) {
+      setUser(user);
+      localStorage.setItem("user", JSON.stringify(user));
+      sendToUrl("/submit");
+    }
+    console.log(`user we get on signin : ${user}`);
+  };
+
   useEffect(() => {
     getEvents();
   }, []);
@@ -34,7 +56,8 @@ export default function HomePage() {
       <div className='container'>
         <div className='hero__title'>An Open List of Flutter Events</div>
         <h4 className='hero__subtitle'>
-          Events are sourced from Meetup.com or can be added manually
+          Events are sourced from Meetup.com or can be added manually with
+          approval
         </h4>
         <div
           className='hero__cta'
@@ -50,7 +73,9 @@ export default function HomePage() {
             <button className='hero_ctaButton'>Get Updates</button>
           </div>
 
-          <p className='here__ctaSubmitEvent'>Submit Event</p>
+          <p className='here__ctaSubmitEvent' onClick={onSignInBtnClick}>
+            Submit Event
+          </p>
         </div>
 
         <p className='hero__txt'>
