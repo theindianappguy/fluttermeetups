@@ -56,7 +56,7 @@
   font-family: europa !important;
   font-size: 18px !important;
   text-align: center;
-  padding: 12.5px 21px !important;
+  padding: 12.5px 32px !important;
   border: 1px solid #3bb4ff !important;
 }
 
@@ -92,6 +92,6 @@
 .here__ctaSubmitEvent {
   box-shadow: inset 0 -3px 0 0 #3bb4ff;
   font-size: 18px;
-  margin-top: 24px !important;
+  margin-top: 42px !important;
   cursor: pointer;
 }
