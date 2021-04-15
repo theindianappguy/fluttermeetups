@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   background: #f7f7f7;
-  border: 5px solid #f7f7f7;
+  border: 2px solid #f7f7f7;
   display: flex;
   align-items: center;
   font-weight: 400;
@@ -16,18 +16,20 @@
   -ms-transition: all 0.25s ease-in;
   -o-transition: all 0.25s ease-in;
   transition: all 0.25s ease-in;
+  cursor: pointer;
 }
 
 .eventName {
-  box-shadow: inset 0 -3px 0 0 #3bb4ff;
   display: inline;
   font-size: 2rem;
-  text-align: left;
   color: #111;
   font-weight: 700;
   position: relative;
   text-decoration: none;
   z-index: 1;
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-color: #3bb4ff7c;
 }
 
 .eventTime {
