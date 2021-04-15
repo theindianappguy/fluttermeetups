@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { toggleEventVerification, deleteEvent } from "../../services/database";
 import "./style.css";
 
@@ -11,24 +11,28 @@ export default function AdminEventTile({
   location,
   verified,
 }) {
+  const [verifiedLocal, setverifiedLocal] = useState(verified);
   return (
-    <div className='eventTile'>
-      <a href={link} className='eventName'>
+    <div className='adminEventTile'>
+      <a href={link} className='adminEventName'>
         {title}
       </a>
-      <p className='eventTime'>{time}</p>
-      <p className='eventDesc'>{desc}</p>
-      <p className='eventDesc'>{location}</p>
+      <p className='adminEventTime'>{time}</p>
+      <p className='adminEventDesc'>{desc}</p>
+      <p className='adminEventDesc'>{location}</p>
 
       <div>
         <a
-          onClick={() => toggleEventVerification(id, verified)}
+          onClick={() => {
+            toggleEventVerification(id, verifiedLocal);
+            setverifiedLocal(!verifiedLocal);
+          }}
           target='_blank'
           rel='noreferrer'
           className='adminEvent__rejectApprove'
-          style={{ backgroundColor: verified ? "#da552e" : "#53c645" }}
+          style={{ backgroundColor: verifiedLocal ? "#da552e" : "#53c645" }}
         >
-          {verified ? "Reject" : "Approve"}
+          {verifiedLocal ? "Reject" : "Approve"}
         </a>
 
         <a
