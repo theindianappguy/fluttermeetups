@@ -16,6 +16,7 @@ export default function SubmitEventPage() {
   const [address, setaddress] = useState("");
   const [desc, setdesc] = useState("");
   const [isOnline, setisOnline] = useState(false);
+  const [isInperson, setisInperson] = useState(false);
   const [link, setlink] = useState("");
   const [name, setname] = useState("");
 
@@ -41,7 +42,7 @@ export default function SubmitEventPage() {
       verified: false,
     };
 
-    await uploadEventInfo(user.uid, EventInfo);
+    await uploadEventInfo(EventInfo);
 
     // send use to home
     sendToUrl("/");
@@ -90,27 +91,36 @@ export default function SubmitEventPage() {
                     type='checkbox'
                     className='submitEvent__checkbox'
                     placeholder='Event Type'
+                    onChange={(e) => setisOnline(e.target.checked)}
                   />
                   Online
                 </label>
 
-                <label className='submitEvent__checkboxLabel'>
+                <label
+                  className='submitEvent__checkboxLabel'
+                  style={{ marginLeft: "16px" }}
+                >
                   <input
                     type='checkbox'
                     className='submitEvent__checkbox'
                     placeholder='Event Type'
+                    onChange={(e) => setisInperson(e.target.checked)}
                   />
                   In Person
                 </label>
               </div>
 
               {/* If In Person */}
-              <p className='submitEvent__label'>Event Address *</p>
-              <input
-                onChange={(e) => setaddress(e.target.value)}
-                className='submitEvent__input'
-                placeholder='Event Address'
-              />
+              {isInperson && (
+                <div>
+                  <p className='submitEvent__label'>Event Address *</p>
+                  <input
+                    onChange={(e) => setaddress(e.target.value)}
+                    className='submitEvent__input'
+                    placeholder='Event Address'
+                  />
+                </div>
+              )}
 
               <p className='submitEvent__label'>Event Date *</p>
               <DatePicker
