@@ -17,7 +17,7 @@ export default function AdminPage() {
   }
 
   //check if admin email if not send to home.
-  if (user?.uid !== "N5siU8Wi1OXoLg6TtjNxHp4tOIl2") sendToUrl("/");
+  if (user?.uid !== "6AlNFstfuhXsnVBa7ZL57heo3Fl1") sendToUrl("/");
 
   const getSetEvents = async () => {
     let [fetchedEvents, _last] = await getAdminEvents();
