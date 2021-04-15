@@ -14,23 +14,59 @@ export const uploadEventInfo = async (eventMap) => {
 
 export const getEvents = async () => {
   let fetched_events = [];
-  let last_visible_event_doc;
+  let lastVisibleLocal;
+
+  var eventsRef = db
+    .collection("events")
+    .orderBy("date")
+    //.where("verified", "==", true)
+    //.orderBy("date", "desc")
+    .limit(2);
+
+  await eventsRef
+    .get()
+    .catch(function (error) {
+      console.log("error getEvents:" + error);
+    })
+    .then((querySnapshot) => {
+      querySnapshot.docs.map((doc) => {
+        fetched_events.push({ id: doc.id, event: doc.data() });
+        console.log(`id:${doc.id}, event:${doc.data()}`);
+
+        lastVisibleLocal = { id: doc.id, event: doc.data() };
+      });
+    });
+
+  return [fetched_events, lastVisibleLocal];
+};
+
+export const getMoreEvents = async (lastVisibleArgument) => {
+  let fetched_events = [];
+  let lastVisibleLocal = lastVisibleArgument;
 
   await db
     .collection("events")
-    .where("verified", "==", true)
-    //.orderBy("date", "desc")
-    .limit(5)
+    .doc(lastVisibleLocal.id)
     .get()
-    .catch(function (error) {})
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
-        fetched_events.push({ id: doc.id, event: doc.data() });
+    .then(async (doc) => {
+      await db
+        .collection("events")
+        .orderBy("date")
+        .startAfter(doc)
+        .get()
+        .catch(function (error) {
+          console.log("error getEvents:" + error);
+        })
+        .then((querySnapshot) => {
+          querySnapshot.docs.map((doc) => {
+            fetched_events.push({ id: doc.id, event: doc.data() });
+            console.log(`id:${doc.id}, event:${doc.data()}`);
 
-        last_visible_event_doc = doc.data;
-      });
+            lastVisibleLocal = { id: doc.id, event: doc.data() };
+          });
+        });
     });
-  return [fetched_events, last_visible_event_doc];
+  return [fetched_events, lastVisibleLocal];
 };
 
 export const getAdminEvents = async () => {
