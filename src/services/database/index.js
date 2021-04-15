@@ -8,8 +8,8 @@ export const uploadUserInfo = (userId, name, email, avatarUrl) => {
   });
 };
 
-export const uploadEventInfo = async (userId, eventMap) => {
-  await db.collection("events").doc(userId).set(eventMap);
+export const uploadEventInfo = async (eventMap) => {
+  await db.collection("events").add(eventMap);
 };
 
 export const getEvents = async () => {
