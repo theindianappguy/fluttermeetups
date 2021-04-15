@@ -5,10 +5,11 @@ export default function EventTile({ title, desc, time, location }) {
   return (
     <div className='eventTile'>
       <a
+        target='_blank'
         href='https://www.meetup.com/Technology-Meetup-India/events/277373901'
         className='eventName'
       >
-        {title}
+        {title.length > 36 ? title.substring(0, 36) + "..." : title}
       </a>
       <p className='eventTime'>{time}</p>
       <p className='eventDesc'>{desc}</p>
